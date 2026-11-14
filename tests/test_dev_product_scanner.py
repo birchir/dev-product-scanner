@@ -4,7 +4,7 @@ import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import store_watch as sw
+import dev_product_scanner as sw
 
 
 def fake_roblox(products, passes=(), badges=()):

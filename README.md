@@ -1,4 +1,4 @@
-# roblox-store-watch
+# Dev Product Scanner
 
 Get a Discord message the moment a Roblox game adds, removes or changes a **developer product**, **game pass** or **badge**: new packs before they're announced, price changes, renames, new icons, items going on or off sale.
 
@@ -29,7 +29,7 @@ Get a Discord message the moment a Roblox game adds, removes or changes a **deve
 4. Run it:
 
 ```
-python store_watch.py
+python dev_product_scanner.py
 ```
 
 It checks every game once a minute and posts whatever changed. What it has seen is saved in `state.json`, so you can stop and start it without getting old alerts.
@@ -46,15 +46,15 @@ It checks every game once a minute and posts whatever changed. What it has seen 
 
 | Command | What it does |
 |---|---|
-| `python store_watch.py` | Watch forever. |
-| `python store_watch.py --once` | Check every game once and exit (for cron or scheduled tasks). |
-| `python store_watch.py --dry-run` | Print the alerts instead of posting them. |
-| `--config path` / `--state path` | Use other files. The config can also come from the `STORE_WATCH_CONFIG` environment variable. |
+| `python dev_product_scanner.py` | Watch forever. |
+| `python dev_product_scanner.py --once` | Check every game once and exit (for cron or scheduled tasks). |
+| `python dev_product_scanner.py --dry-run` | Print the alerts instead of posting them. |
+| `--config path` / `--state path` | Use other files. The config can also come from the `DEV_PRODUCT_SCANNER_CONFIG` environment variable. |
 
 ## Run It Free On GitHub Actions
 
 1. Fork this repo.
-2. In your fork, go to **Settings › Secrets and variables › Actions** and add a secret called `STORE_WATCH_CONFIG` holding your whole `config.json`.
+2. In your fork, go to **Settings › Secrets and variables › Actions** and add a secret called `DEV_PRODUCT_SCANNER_CONFIG` holding your whole `config.json`.
 3. Copy [`examples/github-actions.yml`](examples/github-actions.yml) to `.github/workflows/watch.yml`.
 
 It runs every 5 minutes (GitHub's shortest schedule) and keeps `state.json` in the Actions cache between runs.

@@ -1,11 +1,11 @@
-"""roblox-store-watch: posts to Discord when a Roblox game adds, removes or changes a developer product, game pass
+"""dev-product-scanner: posts to Discord when a Roblox game adds, removes or changes a developer product, game pass
 or badge. Standard library only, no database: what it has seen lives in one JSON file.
 
-    python store_watch.py              watch forever (config.json, state.json next to this file)
-    python store_watch.py --once       check every game once and exit (for cron or GitHub Actions)
-    python store_watch.py --dry-run    print what it would post instead of posting
+    python dev_product_scanner.py              watch forever (config.json, state.json next to this file)
+    python dev_product_scanner.py --once       check every game once and exit (for cron or GitHub Actions)
+    python dev_product_scanner.py --dry-run    print what it would post instead of posting
 
-The config can also come from the STORE_WATCH_CONFIG environment variable (the whole JSON), e.g. a GitHub secret.
+The config can also come from the DEV_PRODUCT_SCANNER_CONFIG environment variable (the whole JSON), e.g. a GitHub secret.
 """
 import argparse
 import json
@@ -17,7 +17,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-UA = 'roblox-store-watch (+https://github.com/birchir/roblox-store-watch)'
+UA = 'dev-product-scanner (+https://github.com/birchir/dev-product-scanner)'
 KINDS = ('products', 'passes', 'badges')
 COLORS = {'new': 0x3BA55D, 'changed': 0xFAA61A, 'removed': 0xED4245}
 LABEL = {'products': 'Developer Product', 'passes': 'Game Pass', 'badges': 'Badge'}
@@ -212,7 +212,7 @@ def main(argv=None):
     ap.add_argument('--once', action='store_true', help='check every game once, then exit')
     ap.add_argument('--dry-run', action='store_true', help='print alerts instead of posting them')
     args = ap.parse_args(argv)
-    cfg = json.loads(os.environ['STORE_WATCH_CONFIG']) if os.environ.get('STORE_WATCH_CONFIG') else load(args.config, None)
+    cfg = json.loads(os.environ['DEV_PRODUCT_SCANNER_CONFIG']) if os.environ.get('DEV_PRODUCT_SCANNER_CONFIG') else load(args.config, None)
     if not cfg or not cfg.get('games'):
         sys.exit(f'No games to watch. Copy config.example.json to {args.config} and fill it in.')
     if not args.dry_run and not cfg.get('webhook') and not all(g.get('webhook') for g in cfg['games']):
