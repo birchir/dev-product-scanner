@@ -1,0 +1,9 @@
+{
+  "webhook": "https://discord.com/api/webhooks/your-id/your-token",
+  "interval": 60,
+  "watch": ["products", "passes", "badges"],
+  "games": [
+    { "place": 8737899170 },
+    { "universe": 3317771874, "name": "Pet Simulator 99", "watch": ["products"], "webhook": "https://discord.com/api/webhooks/another/channel" }
+  ]
+}

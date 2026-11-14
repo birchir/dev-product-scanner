@@ -1,0 +1,21 @@
+# Run roblox-store-watch for free on GitHub Actions, every 5 minutes (GitHub's shortest schedule).
+# 1. Fork the repo. 2. Add a repository secret STORE_WATCH_CONFIG holding your whole config.json.
+# 3. Copy this file to .github/workflows/watch.yml. What it has seen is kept between runs in the Actions cache.
+name: watch
+on:
+  schedule: [{ cron: "*/5 * * * *" }]
+  workflow_dispatch:
+concurrency: watch
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with: { path: state.json, key: "state-${{ github.run_id }}", restore-keys: "state-" }
+      - run: python store_watch.py --once
+        env: { STORE_WATCH_CONFIG: "${{ secrets.STORE_WATCH_CONFIG }}" }
+      - uses: actions/cache/save@v4
+        if: always()
+        with: { path: state.json, key: "state-${{ github.run_id }}" }
